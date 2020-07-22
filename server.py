@@ -7,13 +7,13 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
-URI = "mongodb://admin:admin@cvt-shard-00-00.xqekr.mongodb.net:27017,cvt-shard-00-01.xqekr.mongodb.net:27017,cvt-shard-00-02.xqekr.mongodb.net:27017/covid19?ssl=true&replicaSet=atlas-vemg8m-shard-0&authSource=admin&retryWrites=true&w=majority"
-app = flask.Flask(__name__)
-app.config["MONGO_URI"] = URI
-mongo = PyMongo(app)
+#URI = "mongodb://admin:admin@cvt-shard-00-00.xqekr.mongodb.net:27017,cvt-shard-00-01.xqekr.mongodb.net:27017,cvt-shard-00-02.xqekr.mongodb.net:27017/covid19?ssl=true&replicaSet=atlas-vemg8m-shard-0&authSource=admin&retryWrites=true&w=majority"
+#app = flask.Flask(__name__)
+#app.config["MONGO_URI"] = URI
+#mongo = PyMongo(app)
 
-db = mongo['Covid19']
-collection = db['May2020']
+#db = mongo['Covid19']
+#collection = db['May2020']
 @app.route('/', methods=['GET'])
 
 def home():
@@ -23,7 +23,7 @@ def home():
 @app.route('/home', methods=['GET'])
 def api_all():
     total_cases = pd.read_csv("https://covid.ourworldindata.org/data/ecdc/total_cases.csv")
-    collection.insert_one(total_cases)
+    return total_cases.to_dict()
     
 
 @app.errorhandler(404)
